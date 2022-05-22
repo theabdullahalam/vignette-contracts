@@ -34,6 +34,14 @@ contract Vignette {
     return photographs;
   }
 
+  function getAllPhotographs() public view returns (Photograph[] memory){
+    Photograph[] memory photographs = new Photograph[](all_photograph_uuids.length);
+    for (uint i=0; i < all_photograph_uuids.length; i++){
+      photographs[i] = all_photographs[all_photograph_uuids[i]];
+    }
+    return photographs;
+  }
+
   function updateAccount(string calldata account_metadata_cid) public {
     accounts[msg.sender].account_metadata_cid = account_metadata_cid;
   }
