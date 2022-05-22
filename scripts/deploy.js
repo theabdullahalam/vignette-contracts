@@ -14,21 +14,20 @@ async function main() {
   await hre.run('compile');
 
   // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  // const Greeter = await hre.ethers.getContractFactory("Greeter");
+  // const greeter = await Greeter.deploy("Hello, Hardhat!");
 
-  await greeter.deployed();
+  // await greeter.deployed();
 
-  console.log("Greeter deployed to:", greeter.address);
+  // console.log("Greeter deployed to:", greeter.address);
 
+  // deploy Vignette.sol
+  const Vignette = await hre.ethers.getContractFactory("Vignette");
+  const vignette = await Vignette.deploy();
 
+  await vignette.deployed();
 
-
-  // deploy WXDC
-  // const WXDC = await hre.ethers.getContractFactory('WXDC');
-  // const wxdc = await WXDC.deploy(0)
-  // await wxdc.deployed()
-  // console.log(`WXDC Deployed at ${wxdc.address}`);
+  console.log("Vignette deployed to:", vignette.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
