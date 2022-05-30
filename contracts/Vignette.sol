@@ -18,11 +18,13 @@ contract Vignette {
 
   mapping (address => Account) private accounts;
   mapping (string => Photograph) private all_photographs;
-  string[] private all_photograph_uuids;
+  string[] private all_photograph_cids;
 
   function publishPhotograph(Photograph calldata photograph) public {
+    string memory empty = "";
+    require(keccak256(bytes(all_photographs[photograph.image_cid].image_cid)) == keccak256(bytes(empty)), "Photograph with this CID already exists.");
     all_photographs[photograph.image_cid] = photograph;
-    all_photograph_uuids.push(photograph.image_cid);
+    all_photograph_cids.push(photograph.image_cid);
     accounts[msg.sender].photographs.push(photograph.image_cid);
   }
 
@@ -34,10 +36,14 @@ contract Vignette {
     return photographs;
   }
 
+  function getPhotograph(string calldata cid) public view returns(Photograph memory){
+    return all_photographs[cid];
+  }
+
   function getAllPhotographs() public view returns (Photograph[] memory){
-    Photograph[] memory photographs = new Photograph[](all_photograph_uuids.length);
-    for (uint i=0; i < all_photograph_uuids.length; i++){
-      photographs[i] = all_photographs[all_photograph_uuids[i]];
+    Photograph[] memory photographs = new Photograph[](all_photograph_cids.length);
+    for (uint i=0; i < all_photograph_cids.length; i++){
+      photographs[i] = all_photographs[all_photograph_cids[i]];
     }
     return photographs;
   }

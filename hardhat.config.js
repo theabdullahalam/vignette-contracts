@@ -1,7 +1,7 @@
 require("@nomiclabs/hardhat-waffle");
 require('dotenv').config()
 
-const {MNEMONIC} = process.env
+const { MNEMONIC, INFURA_KEY } = process.env
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -24,7 +24,13 @@ module.exports = {
   defaultNetwork: 'ganache',
   networks: {
     ropsten: {
-      url: `https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161`,
+      url: `https://ropsten.infura.io/v3/${INFURA_KEY}`,
+      accounts: {
+        mnemonic: MNEMONIC,
+      },
+    },
+    rinkeby: {
+      url: `https://rinkeby.infura.io/v3/${INFURA_KEY}`,
       accounts: {
         mnemonic: MNEMONIC,
       },
